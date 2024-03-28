@@ -1,0 +1,38 @@
+import random
+from collections import Counter
+
+def generate_password():
+    password_characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*"
+    password_length = 10
+    password_list = []
+    
+    for _ in range(password_length):
+        password_list.append(random.choice(password_characters))
+    
+    shuffle(password_list)
+    
+    return ''.join(password_list)
+
+def check_password_strength(password):
+    score = 0
+    if len(password) >= 8:
+        score += 5
+    if any(c.isupper() for c in password):
+        score += 2
+    if any(c.islower() for c in password):
+        score += 2
+    if any(c.isdigit() for c in password):
+        score += 2
+    if any(c in '@#$%^&*!' for c in password):
+        score += 2
+    
+    return score
+
+def main():
+    password = generate_password()
+    password_score = check_password_strength(password)
+    print(f"Ваш пароль: {password}")
+    print(f"Сила вашего пароля: {password_score}/11")
+
+if __name__ == "__main__":
+    main()
